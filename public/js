@@ -1,0 +1,5 @@
+```javascript
+// public/js/main.js
+
+console.log('Client-side JavaScript loaded');
+```

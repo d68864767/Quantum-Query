@@ -1,0 +1,26 @@
+```javascript
+// src/api/routes/index.js
+
+// Importing required modules
+const express = require('express');
+const QueryController = require('../controllers/queryController');
+const UserController = require('../controllers/userController');
+
+// Creating a router object
+const router = express.Router();
+
+// Defining routes for queries
+router.post('/queries', QueryController.create);
+router.get('/queries', QueryController.getAll);
+router.get('/queries/:id', QueryController.getById);
+router.put('/queries/:id', QueryController.updateById);
+router.delete('/queries/:id', QueryController.deleteById);
+
+// Defining routes for users
+router.post('/users', UserController.createUser);
+router.get('/users/:username', UserController.findUserByUsername);
+router.put('/users/:username', UserController.updateUser);
+
+// Exporting the router
+module.exports = router;
+```

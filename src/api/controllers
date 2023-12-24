@@ -1,0 +1,115 @@
+```javascript
+// src/api/controllers/queryController.js
+
+// Importing required modules
+const QueryService = require('../../services/queryService');
+
+// Query Controller Object
+const QueryController = {};
+
+// Function to handle a request to create a new query
+QueryController.create = async (req, res) => {
+    try {
+        const result = await QueryService.create(req.body.query);
+        res.json({ result });
+    } catch (error) {
+        res.status(500).json({ error: error.toString() });
+    }
+};
+
+// Function to handle a request to get all queries
+QueryController.getAll = async (req, res) => {
+    try {
+        const queries = await QueryService.getAll();
+        res.json({ queries });
+    } catch (error) {
+        res.status(500).json({ error: error.toString() });
+    }
+};
+
+// Function to handle a request to get a query by ID
+QueryController.getById = async (req, res) => {
+    try {
+        const query = await QueryService.getById(req.params.id);
+        res.json({ query });
+    } catch (error) {
+        res.status(500).json({ error: error.toString() });
+    }
+};
+
+// Function to handle a request to update a query by ID
+QueryController.updateById = async (req, res) => {
+    try {
+        const result = await QueryService.updateById(req.params.id, req.body.query);
+        res.json({ result });
+    } catch (error) {
+        res.status(500).json({ error: error.toString() });
+    }
+};
+
+// Function to handle a request to delete a query by ID
+QueryController.deleteById = async (req, res) => {
+    try {
+        await QueryService.deleteById(req.params.id);
+        res.json({ message: 'Query deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.toString() });
+    }
+};
+
+// Exporting the Query Controller
+module.exports = QueryController;
+```
+
+```javascript
+// src/api/controllers/userController.js
+
+// Importing required modules
+const UserService = require('../../services/userService');
+
+// User Controller Object
+const UserController = {};
+
+// Function to handle a request to create a new user
+UserController.createUser = async (req, res) => {
+    try {
+        const user = await UserService.createUser(req.body.username, req.body.password, req.body.email);
+        res.json({ user });
+    } catch (error) {
+        res.status(500).json({ error: error.toString() });
+    }
+};
+
+// Function to handle a request to find a user by username
+UserController.findUserByUsername = async (req, res) => {
+    try {
+        const user = await UserService.findUserByUsername(req.params.username);
+        res.json({ user });
+    } catch (error) {
+        res.status(500).json({ error: error.toString() });
+    }
+};
+
+// Function to handle a request to update a user's details
+UserController.updateUser = async (req, res) => {
+    try {
+        const user = await UserService.updateUser(req.params.username, req.body.newDetails);
+        res.json({ user });
+    } catch (error) {
+        res.status(500).json({ error: error.toString() });
+    }
+};
+
+// Function to handle a request to delete a user
+UserController.deleteUser = async (req, res) => {
+    try {
+        await UserService.deleteUser(req.params.username);
+        res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.toString() });
+    }
+};
+
+// Exporting the User Controller
+module.exports = UserController;
+```

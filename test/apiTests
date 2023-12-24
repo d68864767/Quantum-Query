@@ -1,0 +1,110 @@
+```javascript
+// test/apiTests/queryApiTest.js
+
+// Importing required modules
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const app = require('../../src/app');
+const Query = require('../../src/models/queryModel');
+
+// Chai setup
+chai.use(chaiHttp);
+const expect = chai.expect;
+
+// Test suite for Query API
+describe('Query API', () => {
+    // Test for POST /queries
+    describe('POST /queries', () => {
+        it('should create a new query', (done) => {
+            const query = {
+                query: 'SELECT * FROM users',
+                result: 'All users'
+            };
+            chai.request(app)
+                .post('/queries')
+                .send(query)
+                .end((err, res) => {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.a('object');
+                    expect(res.body).to.have.property('result');
+                    done();
+                });
+        });
+    });
+
+    // Test for GET /queries
+    describe('GET /queries', () => {
+        it('should get all queries', (done) => {
+            chai.request(app)
+                .get('/queries')
+                .end((err, res) => {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.a('object');
+                    expect(res.body).to.have.property('queries');
+                    done();
+                });
+        });
+    });
+
+    // Test for GET /queries/:id
+    describe('GET /queries/:id', () => {
+        it('should get a query by ID', (done) => {
+            const query = new Query({
+                query: 'SELECT * FROM users',
+                result: 'All users'
+            });
+            query.save((err, query) => {
+                chai.request(app)
+                    .get('/queries/' + query.id)
+                    .end((err, res) => {
+                        expect(res).to.have.status(200);
+                        expect(res.body).to.be.a('object');
+                        expect(res.body).to.have.property('query');
+                        done();
+                    });
+            });
+        });
+    });
+
+    // Test for PUT /queries/:id
+    describe('PUT /queries/:id', () => {
+        it('should update a query by ID', (done) => {
+            const query = new Query({
+                query: 'SELECT * FROM users',
+                result: 'All users'
+            });
+            query.save((err, query) => {
+                chai.request(app)
+                    .put('/queries/' + query.id)
+                    .send({ query: 'SELECT * FROM admins', result: 'All admins' })
+                    .end((err, res) => {
+                        expect(res).to.have.status(200);
+                        expect(res.body).to.be.a('object');
+                        expect(res.body).to.have.property('result');
+                        done();
+                    });
+            });
+        });
+    });
+
+    // Test for DELETE /queries/:id
+    describe('DELETE /queries/:id', () => {
+        it('should delete a query by ID', (done) => {
+            const query = new Query({
+                query: 'SELECT * FROM users',
+                result: 'All users'
+            });
+            query.save((err, query) => {
+                chai.request(app)
+                    .delete('/queries/' + query.id)
+                    .end((err, res) => {
+                        expect(res).to.have.status(200);
+                        expect(res.body).to.be.a('object');
+                        expect(res.body).to.have.property('message').eql('Query deleted successfully');
+                        done();
+                    });
+            });
+        });
+    });
+});
+```

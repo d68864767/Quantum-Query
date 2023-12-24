@@ -1,0 +1,40 @@
+```javascript
+// Importing required modules
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const { expect } = chai;
+chai.use(chaiHttp);
+
+// Importing the app and the services
+const app = require('../../src/app');
+const QueryService = require('../../src/services/queryService');
+const UserService = require('../../src/services/userService');
+
+describe('Unit Tests:', () => {
+    describe('QueryService Tests:', () => {
+        it('should create a new query', async () => {
+            // Your test code goes here
+        });
+
+        it('should get all queries', async () => {
+            // Your test code goes here
+        });
+
+        // Add more tests as needed
+    });
+
+    describe('UserService Tests:', () => {
+        it('should create a new user', async () => {
+            // Your test code goes here
+        });
+
+        it('should find a user by username', async () => {
+            // Your test code goes here
+        });
+
+        // Add more tests as needed
+    });
+
+    // Add more describe blocks for other services or models as needed
+});
+```
